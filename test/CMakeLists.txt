@@ -1,4 +1,4 @@
-include_directories("${PROJECT_SOURCE_DIR}")
+include_directories(../src)
 
 # First Simple Google Test
 add_executable(testProject test.cpp)
