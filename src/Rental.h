@@ -26,4 +26,4 @@ getDaysRented() const { return _daysRented; }
 inline const Movie& Rental::
 getMovie() const { return _movie; }
 
-#endif // RENTAL_H
+#endif // RENTAL_HNEW_RELEASE

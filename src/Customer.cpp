@@ -19,23 +19,7 @@ string Customer::statement()
     for ( ; iter != iter_end; ++iter ) {
         double thisAmount = 0;
         Rental each = *iter;
-
-        // determine amounts for each line
-        switch ( each.getMovie().getPriceCode() ) {
-            case Movie::REGULAR:
-                thisAmount += 2;
-                if ( each.getDaysRented() > 2 )
-                    thisAmount += ( each.getDaysRented() - 2 ) * 1.5 ;
-                break;
-            case Movie::NEW_RELEASE:
-                thisAmount += each.getDaysRented() * 3;
-                break;
-            case Movie::CHILDRENS:
-                thisAmount += 1.5;
-                if ( each.getDaysRented() > 3 )
-                    thisAmount += ( each.getDaysRented() - 3 ) * 1.5;
-                break;
-        }
+        thisAmount = amount(thisAmount, each);
 
         // add frequent renter points
         frequentRenterPoints++;
@@ -53,4 +37,24 @@ string Customer::statement()
     result << "You earned " << frequentRenterPoints
            << " frequent renter points";
     return result.str();
+}
+
+double Customer::amount(double thisAmount, const Rental &rental) const {
+    switch (rental.getMovie().getPriceCode()) {
+        case Movie::REGULAR:
+            thisAmount += 2;
+            if (rental.getDaysRented() > 2)
+                thisAmount += (rental.getDaysRented() - 2) * 1.5;
+            break;
+        case Movie::NEW_RELEASE:
+            thisAmount += rental.getDaysRented() * 3;
+            break;
+        case Movie::CHILDRENS:
+            thisAmount += 1.5;
+            if (rental.getDaysRented() > 3)
+                thisAmount += (rental.getDaysRented() - 3) * 1.5;
+            break;
+    }
+
+    return thisAmount;
 }
